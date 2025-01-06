@@ -18,7 +18,7 @@ class CreateAssociationsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('is_approved')->default(false);
+            $table->unsignedBigInteger("state")->default(0);
             $table->timestamps();
         });
     }
