@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Takeat;
 use App\Models\Association;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\AssociationsService;
+use App\Models\TakeatRegistrationRequest;
 
 class AssociationController extends Controller
 {
+    public function __construct(private AssociationsService  $associationsService) {}
     public function index()
     {
         $associations = Association::all();
@@ -75,6 +79,13 @@ class AssociationController extends Controller
 
     public function show(Association $association)
     {
-        return view("associations.show", ["association" => $association]);
+        $datas = $this->associationsService->get($association);
+    
+        return view(
+            "associations.show",
+            [
+                "association" => $datas
+            ]
+        );
     }
 }

@@ -18,7 +18,6 @@ class CreateTakeatRegistrationRequestsTable extends Migration
             $table->string('email');
             $table->unsignedBigInteger('state')->default(0);
             $table->boolean('is_renewal')->default(false);
-            $table->boolean('is_approved')->default(false);
             $table->foreignId('associations_id')->constrained();
             $table->timestamps();
         });

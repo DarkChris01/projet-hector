@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('associations', function (Blueprint $table) {
+        Schema::table('takeat_registration_requests', function (Blueprint $table) {
             $table->unsignedBigInteger("time")->default(6);
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('associations', function (Blueprint $table) {
+        Schema::table('takeat_registration_requests', function (Blueprint $table) {
             //
         });
     }

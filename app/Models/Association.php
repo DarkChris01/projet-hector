@@ -9,4 +9,9 @@ class Association extends Model
 {
     use HasFactory;
     protected $fillable = ["name", "email", "password", "state"];
+
+    public function takeat_registration_request()
+    {
+        return $this->belongsTo(TakeatRegistrationRequest::class);
+    }
 }

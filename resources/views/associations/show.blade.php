@@ -10,9 +10,34 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 <body>
-    <h1 class="text-center p-3 text-xl">
-        Welcome to {{ $association->name }}
-    </h1>
+    @if ($association)
+        <h1 class="text-center p-3 text-xl">
+            Welcome to {{ $association->name }}
+        </h1>
+    @endif
+
+    <main>
+        <div>
+            <div>
+                <table class="w-3/4">
+                    <tr>
+                        <td>#</td>
+                        <td>association</td>
+                        <td>b</td>
+                        <td>actions</td>
+                    </tr>
+                    @foreach ($associations->takeat_registration_request as $request)
+                        <tr>
+                            <td>{{$request->id}}</td>
+                            <td>{{z}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </main>
 
 </body>
 
