@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AssociationController;
 use App\Http\Controllers\AuthenticationAssociationController;
+use App\Http\Controllers\Takeat_registration_requestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
 });
 Route::group(["prefix" => "associations"], function () {
     Route::get("/login", [AssociationController::class, "login"]);
@@ -40,6 +39,11 @@ Route::group(["prefix" => "associations"], function () {
     Route::post("/store", [AssociationController::class, "store"])->name("association.store");
     Route::patch("/approve/{association}", [AssociationController::class, "approved"])->name("association.approve.status");
     Route::patch("/rejecte/{association}", [AssociationController::class, "rejected"])->name("association.rejecte.status");
+});
+
+Route::group(["prefix" => "requests"], function () {
+    Route::get("/create/{association}", [Takeat_registration_requestController::class, "create"])->name("request.create");
+    Route::post("/store", [Takeat_registration_requestController::class, "store"])->name("request.store");
 });
 
 require __DIR__ . '/auth.php';

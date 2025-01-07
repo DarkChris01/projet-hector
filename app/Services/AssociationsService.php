@@ -10,8 +10,9 @@ class AssociationsService
 
     public function get(Association $association)
     {
-        dd($association );
-        return Association::find($association->id)->with("takeat_registration_request")->first();
 
+        return Association::where("id", $association->id)
+            ->with("requests")
+            ->first();
     }
 }

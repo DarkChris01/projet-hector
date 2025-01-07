@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Takeat;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Association extends Model
 {
     use HasFactory;
     protected $fillable = ["name", "email", "password", "state"];
 
-    public function takeat_registration_request()
+    public function requests()
     {
-        return $this->belongsTo(TakeatRegistrationRequest::class);
+        return $this->hasMany(Takeat_registration_request::class,"associations_id");
     }
 }
