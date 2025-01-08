@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Association;
 use Illuminate\Http\Request;
-use App\Models\Takeat_registration_request;
-use Nette\Utils\Random;
+use App\Models\TakeatRegistrationRequest;
+use Exception;
 
-class Takeat_registration_requestController extends Controller
+class TakeatRegistrationRequestController extends Controller
 {
 
     /**
@@ -21,24 +21,31 @@ class Takeat_registration_requestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($association_id, Request $request)
     {
+        if ($request->user()->id !== $association_id) {
+            return response()->json([
+                "error" => "vous n'avez pas acces à cette association !"
+            ]);
+        }
 
         $request->validate([
             "email" => ["required", "email", "string"],
             "time" => ["integer", "required"],
-            "association" => ["integer", "exists:associations,id"]
         ]);
 
-        $random = random_int(100000, 999999);
-        
-        Takeat_registration_request::create([
-            "email" => $request->email,
-            "time" => $request->time,
-            "associations_id" => $request->association
-        ]);
+        try {
+            $takeatRegistrationRequest = TakeatRegistrationRequest::create([
+                "email" => $request->email,
+                "time" => $request->time,
+                "associations_id" => $association_id
+            ]);
+
+            return response()->json($takeatRegistrationRequest);
+        } catch (\Throwable $th) {
+            return response()->withException($th);
+        }
     }
-
     /**
      * Display the specified resource.
      */

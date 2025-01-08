@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Takeat;
+use Exception;
 use App\Models\Association;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +12,7 @@ use App\Models\TakeatRegistrationRequest;
 class AssociationController extends Controller
 {
     public function __construct(private AssociationsService  $associationsService) {}
+
     public function index()
     {
         $associations = Association::all();
@@ -79,13 +80,21 @@ class AssociationController extends Controller
 
     public function show(Association $association)
     {
-        $datas = $this->associationsService->get($association);
-    
-        return view(
-            "associations.show",
-            [
-                "association" => $datas
-            ]
-        );
+        return view("associations.show");
+    }
+
+    public function getTakeatRegistrationRequest(Association $association, Request $request)
+    {
+        if ($request->user()->id !== $association->id) {
+            return response()->json([
+                "error" => "vous n'avez pas acces à cette association !"
+            ]);
+        }
+        try {
+            $datas = TakeatRegistrationRequest::where("associations_id", $association->id)->get();
+            return response()->json($datas);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

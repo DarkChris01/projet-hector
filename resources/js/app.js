@@ -1,7 +1,13 @@
-import './bootstrap';
+import axios from "axios";
 
-import Alpine from 'alpinejs';
+async function get_associations() {
 
-window.Alpine = Alpine;
+    const response = await axios.get("/associations",{
+        headers:{
+            Authorization:'Bearer 18|KYFTu00bXG1H7toF2YZW87tV5NUMDHVbXlrzppQl9b9211c9'
+        }
+    });
+    console.log(response.data);
+}
 
-Alpine.start();
+get_associations()

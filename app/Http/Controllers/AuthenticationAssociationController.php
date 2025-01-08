@@ -3,28 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Association;
-use App\Models\TakeatRegistrationRequest;
-use App\Services\AssociationsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationAssociationController extends Controller
 {
 
-    public function __construct(private AssociationsService $associationsService) {}
+
+    // Méthode pour se connecter et obtenir un token
     public function login(Request $request)
     {
         $request->validate([
-            "email" => ["required", "string", "email"],
-            "password" => ["required", "string"]
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-        $association = Association::where("email", $request->email)->first();
-        if (Hash::check($request->password, $association->password)) {
-            $datas = $this->associationsService->get($association);
-            return to_route("association.show", [
-                "association" => $datas
-            ]);
+
+        $association = Association::where('email', $request->email)->first();
+
+        if (!$association || !Hash::check($request->password, $association->password)) {
+            return response()->json(['message' => 'Credentials do not match'], 401);
         }
-        return back()->with("error", "probleme lors de la connexion");
+
+        // Générer un token d'accès
+        $token = $association->createToken('token')->plainTextToken;
+
+        return response()->json([
+
+            'association' => $association,
+            'access_token' => $token
+        ]);
     }
 }
