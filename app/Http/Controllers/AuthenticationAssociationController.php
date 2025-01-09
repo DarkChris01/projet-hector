@@ -12,7 +12,7 @@ class AuthenticationAssociationController extends Controller
 
 
     // Méthode pour se connecter et obtenir un token
-    public function login(Request $request)
+    public function authenticate(Request $request)
     {
         $request->validate([
             'email' => 'required|email',

@@ -23,7 +23,8 @@ class TakeatRegistrationRequestController extends Controller
      */
     public function store($association_id, Request $request)
     {
-        if ($request->user()->id !== $association_id) {
+
+        if ($request->user()->id != $association_id) {
             return response()->json([
                 "error" => "vous n'avez pas acces à cette association !"
             ]);

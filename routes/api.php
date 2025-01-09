@@ -17,11 +17,11 @@ use App\Http\Controllers\TakeatRegistrationRequestController;
 */
 
 Route::group(["prefix" => "associations"], function () {
-    Route::post("/login", [AuthenticationAssociationController::class, "login"])->name("association.login");
+    Route::post("/login", [AuthenticationAssociationController::class, "authenticate"])->name("association.login");
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get("/{association}/takeatRegistrationRequest", [AssociationController::class, "getTakeatRegistrationRequest"])->name("api.association.getTakeatRegistrationRequest");
+        Route::get("/{association}/takeat-registration-request", [AssociationController::class, "getTakeatRegistrationRequest"])->name("api.association.getTakeatRegistrationRequest");
         Route::PUT("/update/{association}", [AssociationController::class, "update"])->name("api.association.update");
         Route::delete("/update/{association}", [AssociationController::class, "destroy"])->name("api.association.destroy");
-        Route::post("/{asssociation}/TakeatRegistrationRequest", [TakeatRegistrationRequestController::class, "store"])->name("api.TakeatRegistrationRequest.store");
+        Route::post("/{asssociation}/takeat-registration-request", [TakeatRegistrationRequestController::class, "store"])->name("api.TakeatRegistrationRequest.store");
     });
 });

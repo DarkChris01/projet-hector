@@ -11,8 +11,9 @@
 
 <body>
     <div class="w-full flex justify-center h-screen items-center">
-        <div class="w-1/3">
-            <form action={{ route('association.login') }} method="post">
+        <div class="w-1/3 border shadow p-6">
+            <h1 class="text-center font-semibold text-xl text-gray-500 mb-4">Connectez Vous</h1>
+            <form action={{ route('association.login') }} method="post" id="formulaire">
                 @csrf
                 <div class="my-2">
                     <input value="{{ old('email') }}" class="p-2 px-4 w-full rounded" type="text" name="email"
@@ -26,7 +27,7 @@
              
 
                 <div>
-                    <button type="submit" class="rounded w-full bg-indigo-600 p-2 text-white">Connexion</button>
+                    <button type="submit" id="submit" class="rounded w-full bg-indigo-600 p-2 text-white">Connexion</button>
                 </div>
             </form>
             @error('email')
